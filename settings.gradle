@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "Affiliate Link Cleaner"
+rootProject.name = "Link Purify"

@@ -1,4 +1,4 @@
-package com.vu.linkcleaner
+package com.vu.linkpurify
 
 import android.content.Context
 import android.content.res.Configuration

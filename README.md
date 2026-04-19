@@ -25,7 +25,7 @@ Protect your privacy and ensure you're opening direct product pages without bein
 ## 📥 Installation
 
 1. Go to the [Releases](https://github.com/vutranHS/link-purify/releases) page.
-2. Download the latest `app-debug.apk`.
+2. Download the latest `app-release.apk`.
 3. Install the APK on your Android device.
 4. (Optional) Set the app as the default handler for `shopee.vn`, `lazada.vn`, and `tiktok.com` in your system settings.
 

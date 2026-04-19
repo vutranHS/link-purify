@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.vu.linkcleaner'
+    namespace 'com.vu.linkpurify'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.vu.linkcleaner"
+        applicationId "com.vu.linkpurify"
         minSdk 24
         targetSdk 34
         versionCode 1

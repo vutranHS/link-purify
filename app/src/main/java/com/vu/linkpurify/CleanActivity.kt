@@ -1,4 +1,4 @@
-package com.vu.linkcleaner
+package com.vu.linkpurify
 
 import android.content.Context
 import android.content.Intent
@@ -58,7 +58,7 @@ class CleanActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 val result = withContext(Dispatchers.IO) {
-                    LinkCleaner.clean(url)
+                    LinkPurifyEngine.clean(url)
                 }
                 cleanedUrl = result
                 

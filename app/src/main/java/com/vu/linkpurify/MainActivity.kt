@@ -1,4 +1,4 @@
-package com.vu.linkcleaner
+package com.vu.linkpurify
 
 import android.content.Context
 import android.content.Intent
@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
                     btnTest.text = getString(R.string.btn_cleaning)
                     
                     val cleanUrl = withContext(Dispatchers.IO) {
-                        LinkCleaner.clean(url)
+                        LinkPurifyEngine.clean(url)
                     }
                     
                     lastTestedUrl = cleanUrl
