@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.*
 
@@ -19,12 +20,16 @@ class CleanActivity : AppCompatActivity() {
 
     private var cleanedUrl: String? = null
 
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LocaleHelper.onAttach(newBase))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
         // Show the review UI early (in a loading state) to prevent the "no activity" or "transparent hang" feel
         setContentView(R.layout.activity_clean)
-        findViewById<TextView>(R.id.tv_clean_url).text = "Cleaning link..."
+        findViewById<TextView>(R.id.tv_clean_url).text = getString(R.string.msg_cleaning)
         findViewById<View>(android.R.id.content).visibility = View.VISIBLE
         
         // Disable buttons while loading
@@ -50,7 +55,7 @@ class CleanActivity : AppCompatActivity() {
     }
 
     private fun processUrl(url: String) {
-        CoroutineScope(Dispatchers.Main).launch {
+        lifecycleScope.launch {
             try {
                 val result = withContext(Dispatchers.IO) {
                     LinkCleaner.clean(url)
@@ -67,14 +72,14 @@ class CleanActivity : AppCompatActivity() {
                     updateReviewUI()
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@CleanActivity, "Failed to process link", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@CleanActivity, getString(R.string.msg_error_process), Toast.LENGTH_SHORT).show()
                 finish()
             }
         }
     }
 
     private fun updateReviewUI() {
-        findViewById<TextView>(R.id.tv_clean_url).text = cleanedUrl ?: "No URL cleaned"
+        findViewById<TextView>(R.id.tv_clean_url).text = cleanedUrl ?: ""
         findViewById<MaterialButton>(R.id.btn_open).isEnabled = true
         
         findViewById<MaterialButton>(R.id.btn_cancel).setOnClickListener {
@@ -95,7 +100,7 @@ class CleanActivity : AppCompatActivity() {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         } catch (e: Exception) {
-            Toast.makeText(this, "Could not open link", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.msg_error_open), Toast.LENGTH_SHORT).show()
         }
     }
 }

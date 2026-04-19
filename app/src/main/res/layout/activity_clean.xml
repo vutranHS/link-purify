@@ -24,7 +24,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Link Cleaned ✨"
+                android:text="@string/clean_link_title"
                 android:textColor="@color/text_primary"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -33,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Destination URL"
+                android:text="@string/destination_url"
                 android:textColor="@color/text_secondary"
                 android:textSize="12sp"
                 android:textStyle="bold"
@@ -47,7 +47,7 @@
                 android:layout_marginTop="8dp"
                 android:background="#08000000"
                 android:padding="16dp"
-                android:text="Loading..."
+                android:text="@string/loading"
                 android:textColor="@color/primary"
                 android:textSize="14sp"
                 android:fontFamily="serif" />
@@ -64,7 +64,7 @@
                     android:layout_width="0dp"
                     android:layout_height="56dp"
                     android:layout_weight="1"
-                    android:text="Ignore"
+                    android:text="@string/btn_ignore"
                     android:textColor="@color/text_secondary" />
 
                 <com.google.android.material.button.MaterialButton
@@ -73,7 +73,7 @@
                     android:layout_height="56dp"
                     android:layout_marginStart="12dp"
                     android:layout_weight="1.5"
-                    android:text="Open Now"
+                    android:text="@string/btn_open_now"
                     android:textAllCaps="false"
                     android:textStyle="bold"
                     app:cornerRadius="14dp" />

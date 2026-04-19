@@ -1,3 +1,28 @@
 <resources>
-    <string name="app_name">Affiliate Link Cleaner</string>
+    <string name="app_name">Link Purify</string>
+    <string name="clean_link_title">Link Đã Làm Sạch ✨</string>
+    <string name="destination_url">Đường Dẫn Đích</string>
+    <string name="loading">Đang tải...</string>
+    <string name="btn_ignore">Bỏ qua</string>
+    <string name="btn_open_now">Mở ngay</string>
+    <string name="dashboard_title">Chặn Theo Dõi</string>
+    <string name="dashboard_subtitle">Mở link Shopee, Lazada &amp; TikTok thật sạch.</string>
+    <string name="setup_title">Cách sử dụng</string>
+    <string name="setup_desc">1. Nhấn vào bất kỳ link rút gọn nào.\n2. Chọn ứng dụng này trong bảng chọn.\n3. Chọn \'Luôn chọn\' để bỏ qua theo dõi mãi mãi.\n\nBạn cũng có thể chia sẻ link trực tiếp vào app này.</string>
+    <string name="tester_title">Trình Kiểm Tra Link</string>
+    <string name="btn_clean">Làm Sạch Link</string>
+    <string name="btn_cleaning">Đang xử lý...</string>
+    <string name="result_title">Link Đã Làm Sạch</string>
+    <string name="btn_open_product">Mở Sản Phẩm</string>
+    <string name="settings_title">Cài Đặt</string>
+    <string name="setting_auto_open">Tự Động Mở Link</string>
+    <string name="setting_auto_open_desc">Tự động mở trang sản phẩm sau khi làm sạch.</string>
+    <string name="setting_language">Ngôn Ngữ</string>
+    <string name="setting_language_desc">Chọn ngôn ngữ hiển thị (Tiếng Việt / English).</string>
+    <string name="tagline">Phát triển vì một trải nghiệm mua sắm sạch sẽ.</string>
+    <string name="msg_cleaning">Đang xử lý link...</string>
+    <string name="msg_error_process">Lỗi khi xử lý link</string>
+    <string name="msg_error_open">Không thể mở link</string>
+    <string name="lang_vi">Tiếng Việt</string>
+    <string name="lang_en">English</string>
 </resources>
