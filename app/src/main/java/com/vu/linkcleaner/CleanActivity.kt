@@ -1,0 +1,101 @@
+package com.vu.linkcleaner
+
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
+import android.view.View
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.button.MaterialButton
+import kotlinx.coroutines.*
+
+/**
+ * A transparent activity that intercepts affiliate links, cleans them, and redirects.
+ * Shows a review UI if auto-open is disabled.
+ */
+class CleanActivity : AppCompatActivity() {
+
+    private var cleanedUrl: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        
+        // Show the review UI early (in a loading state) to prevent the "no activity" or "transparent hang" feel
+        setContentView(R.layout.activity_clean)
+        findViewById<TextView>(R.id.tv_clean_url).text = "Cleaning link..."
+        findViewById<View>(android.R.id.content).visibility = View.VISIBLE
+        
+        // Disable buttons while loading
+        findViewById<MaterialButton>(R.id.btn_open).isEnabled = false
+        
+        val inputUrl = when (intent.action) {
+            Intent.ACTION_SEND -> {
+                if ("text/plain" == intent.type) {
+                    intent.getStringExtra(Intent.EXTRA_TEXT)
+                } else null
+            }
+            Intent.ACTION_VIEW -> {
+                intent.dataString
+            }
+            else -> null
+        }
+
+        if (inputUrl != null) {
+            processUrl(inputUrl)
+        } else {
+            finish()
+        }
+    }
+
+    private fun processUrl(url: String) {
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val result = withContext(Dispatchers.IO) {
+                    LinkCleaner.clean(url)
+                }
+                cleanedUrl = result
+                
+                val prefs = getSharedPreferences("settings", Context.MODE_PRIVATE)
+                val autoOpen = prefs.getBoolean("auto_open", false)
+                
+                if (autoOpen) {
+                    openUrl(result)
+                    finish()
+                } else {
+                    updateReviewUI()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this@CleanActivity, "Failed to process link", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+        }
+    }
+
+    private fun updateReviewUI() {
+        findViewById<TextView>(R.id.tv_clean_url).text = cleanedUrl ?: "No URL cleaned"
+        findViewById<MaterialButton>(R.id.btn_open).isEnabled = true
+        
+        findViewById<MaterialButton>(R.id.btn_cancel).setOnClickListener {
+            finish()
+        }
+        
+        findViewById<MaterialButton>(R.id.btn_open).setOnClickListener {
+            cleanedUrl?.let { openUrl(it) }
+            finish()
+        }
+    }
+
+    private fun openUrl(url: String) {
+        try {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            // Important: Don't exclude from recents if we want the user to find the browser/product app later.
+            // But keep NEW_TASK for non-activity contexts.
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+        } catch (e: Exception) {
+            Toast.makeText(this, "Could not open link", Toast.LENGTH_SHORT).show()
+        }
+    }
+}
