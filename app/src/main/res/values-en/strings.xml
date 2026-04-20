@@ -19,6 +19,10 @@
     <string name="setting_auto_open_desc">Open product immediately after cleaning.</string>
     <string name="setting_language">Language</string>
     <string name="setting_language_desc">Select language (Vietnamese / English).</string>
+    <string name="setting_auto_clipboard">Auto-check Clipboard</string>
+    <string name="setting_auto_clipboard_desc">Automatically detect links on app open.</string>
+    <string name="btn_paste_clean">Paste &amp; Clean</string>
+    <string name="msg_clipboard_detected">Link detected in clipboard!</string>
     <string name="tagline">Built for a cleaner shopping experience.</string>
     <string name="msg_cleaning">Cleaning link...</string>
     <string name="msg_error_process">Failed to process link</string>

@@ -27,21 +27,38 @@
             android:exported="true"
             android:noHistory="true"
             android:theme="@style/Theme.LinkPurify.Translucent">
-            
-            <intent-filter>
+
+            <!-- Shopee Support -->
+            <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="s.shopee.vn" />
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:host="s.shopee.vn" />
+                <data android:host="shp.ee" />
+                <data android:host="vn.shp.ee" />
             </intent-filter>
 
-            <intent-filter>
+            <!-- Lazada & TikTok Support -->
+            <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="s.lazada.vn" />
-                <data android:scheme="https" android:host="vt.tiktok.com" />
-                <data android:scheme="https" android:host="v.tiktok.com" />
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:host="s.lazada.vn" />
+                <data android:host="vt.tiktok.com" />
+                <data android:host="v.tiktok.com" />
+            </intent-filter>
+
+            <!-- Generic Browser Role (Catch-all) -->
+            <intent-filter android:priority="1">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="http" />
+                <data android:scheme="https" />
             </intent-filter>
 
             <intent-filter>

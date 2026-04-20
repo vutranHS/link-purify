@@ -14,6 +14,14 @@ object LinkPurifyEngine {
         .readTimeout(10, TimeUnit.SECONDS)
         .build()
 
+    fun isAffiliateLink(url: String): Boolean {
+        val host = try { URL(url).host?.lowercase() ?: "" } catch (e: Exception) { "" }
+        return host.contains("shopee.vn") || 
+               host.contains("shp.ee") ||
+               host.contains("lazada.vn") || 
+               host.contains("tiktok.com")
+    }
+
     /**
      * Entry point for cleaning a URL.
      * Note: This is an 'object' function, but in production, consider injecting the client.
@@ -35,7 +43,12 @@ object LinkPurifyEngine {
         }
     }
 
-    private fun extractUrl(text: String): String? {
+    fun extractAllUrls(text: String): List<String> {
+        val regex = Regex("https?://[^\\s]+")
+        return regex.findAll(text).map { it.value }.distinct().toList()
+    }
+
+    fun extractUrl(text: String): String? {
         val regex = Regex("https?://[^\\s]+")
         return regex.find(text)?.value
     }
@@ -55,7 +68,8 @@ object LinkPurifyEngine {
                 val finalUrl = response.request.url.toString()
                 
                 // If we are on a known bridge domain or the URL hasn't changed, peek into HTML for hidden redirects
-                if (finalUrl.contains("s.lazada.vn") || finalUrl.contains("s.shopee.vn") || finalUrl == url) {
+                if (finalUrl.contains("s.lazada.vn") || finalUrl.contains("s.shopee.vn") || 
+                    finalUrl.contains("shp.ee") || finalUrl == url) {
                     val body = response.body?.string() ?: ""
                     val extractedUrl = peekHtmlForRedirect(body)
                     if (extractedUrl != null && extractedUrl != finalUrl) {

@@ -48,10 +48,39 @@ class CleanActivity : AppCompatActivity() {
         }
 
         if (inputUrl != null) {
+            // Check if it's a shopping link. If not, and we are acting as a general browser, forward silently.
+            if (!LinkPurifyEngine.isAffiliateLink(inputUrl)) {
+                silentForward(inputUrl)
+                return
+            }
             processUrl(inputUrl)
         } else {
             finish()
         }
+    }
+
+    private fun silentForward(url: String) {
+        try {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            intent.addCategory(Intent.CATEGORY_BROWSABLE)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            
+            // Find another app that can handle this, excluding ourselves to avoid loops
+            val packageManager = packageManager
+            val activities = packageManager.queryIntentActivities(intent, 0)
+            val otherActivity = activities.find { it.activityInfo.packageName != packageName }
+            
+            if (otherActivity != null) {
+                intent.setPackage(otherActivity.activityInfo.packageName)
+                startActivity(intent)
+            } else {
+                // If no other handler, just let the standard chooser handle it (might include us, but better than doing nothing)
+                startActivity(Intent.createChooser(intent, "Open with..."))
+            }
+        } catch (e: Exception) {
+            // Fallback
+        }
+        finish()
     }
 
     private fun processUrl(url: String) {
